@@ -1,6 +1,6 @@
 @RankTracker.API_HostAddress = http://localhost:5193
 
-GET {{RankTracker.API_HostAddress}}/weatherforecast/
+GET {{RankTracker.API_HostAddress}}/healthcheck/
 Accept: application/json
 
 ###

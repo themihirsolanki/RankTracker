@@ -1,1 +1,23 @@
-<p>dashboard works!</p>
+<h1>Keyword Ranking</h1>
+<table class="table table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">Keyword</th>
+        <th class="position" scope="col">Position</th>
+        <th class="link"></th>
+        <th class="link"></th>
+        <th class="updated" scope="col">Updated</th>
+      </tr>
+    </thead>
+    <tbody>
+        @for (keywordRank of keywordRanks; track $index) {
+            <tr>
+                <td>{{ keywordRank.keyword }}</td>
+                <td class="position">{{ keywordRank.position }}</td>
+                <td class="link"><a href="#"><i class="bi bi-link-45deg"></i></a></td>
+                <td class="link"><a href="#"><i class="bi bi-graph-up"></i></a></td>
+                <td class="updated">{{ keywordRank.dateUpdated | date:'mediumDate' }} <a href="#"><i class="bi bi-arrow-repeat"></i></a></td>
+              </tr>
+        }
+    </tbody>
+</table>

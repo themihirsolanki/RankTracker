@@ -1,1 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
+h1 {
+    color: #003F91;
+    font-size: 1.6em;
+    text-align: left;
+    margin: 30px 0px;
+}

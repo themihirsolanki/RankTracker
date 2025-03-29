@@ -1,0 +1,23 @@
+:host {
+    font-size: 0.9em;
+}
+
+.position {
+    width: 100px;
+    text-align: center;
+}
+
+.updated {
+    width: 200px;
+    text-align: center;
+}
+
+.link {
+    width: 50px;
+    text-align: center;
+}
+
+.link i:hover {
+    color:red;
+    font-weight: bold;
+}
