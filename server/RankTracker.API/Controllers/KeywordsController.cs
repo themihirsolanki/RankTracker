@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using RankTracker.API.Models;
 
 namespace RankTracker.API.Controllers
 {
@@ -17,6 +18,12 @@ namespace RankTracker.API.Controllers
         public IActionResult Get()
         {
             return Ok("API is running");
+        }
+
+        [HttpPost()]
+        public IActionResult Post([FromBody] AddKeywordModel model)
+        {
+            return Ok();
         }
     }
 }

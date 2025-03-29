@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Configuration } from '../models/configuration.model';
 
@@ -6,7 +6,7 @@ import { Configuration } from '../models/configuration.model';
   providedIn: 'root'
 })
 export class ApiService {
-
+  
   constructor(private http: HttpClient) {}
 
   fetchConfiguration() {
@@ -15,5 +15,9 @@ export class ApiService {
 
   updateConfiguration(domain: string) {
     return this.http.post('configuration', { domain });
+  }
+
+  addKeyword(keyword: string) {
+    return this.http.post('keywords', { keyword});
   }
 }

@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { KeywordRank } from '../../models/keyword-rank.model';
 import { CommonModule } from '@angular/common';
+import { AddKeywordComponent } from "../../components/add-keyword/add-keyword.component";
 
 @Component({
   selector: 'app-dashboard',
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    AddKeywordComponent
+],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
