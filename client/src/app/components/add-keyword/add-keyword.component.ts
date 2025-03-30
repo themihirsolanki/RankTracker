@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ApiService } from '../../services/api.service';
 
@@ -13,15 +13,20 @@ import { ApiService } from '../../services/api.service';
 })
 export class AddKeywordComponent {
   keyword: string = '';
+  showAlert: boolean = false;
+
+  @Output() keywordAdded = new EventEmitter<string>();
   
-  constructor(private apiService: ApiService) {
-  }
+  constructor(private apiService: ApiService) { }
 
   addKeyword() {
-    this.apiService.addKeyword(this.keyword).subscribe(
-      response => {
-        console.log('Keyword added successfully:', response);
-        this.keyword = '';
-      });
+    
+    this.keywordAdded.emit(this.keyword.trim());
+    this.keyword = '';
+    this.showAlert = true;
+    
+    setTimeout(() => {
+      this.showAlert = false;
+    }, 2000);
   }
 }

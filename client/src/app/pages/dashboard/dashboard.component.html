@@ -1,5 +1,5 @@
 <h1>Keyword Ranking</h1>
-<app-add-keyword></app-add-keyword>
+<app-add-keyword (keywordAdded)="keywordAdded($event)"></app-add-keyword>
 <table class="table table-bordered">
     <thead>
       <tr>
@@ -17,7 +17,7 @@
                 <td class="position">{{ keywordRank.rank }}</td>
                 <td class="link"><a href="#"><i class="bi bi-link-45deg"></i></a></td>
                 <td class="link"><a href="#"><i class="bi bi-graph-up"></i></a></td>
-                <td class="updated">{{ keywordRank.dateUpdated | date:'mediumDate' }} <a href="#"><i class="bi bi-arrow-repeat"></i></a></td>
+                <td class="updated">{{ keywordRank.dateUpdated | date:'d MMM, h:mm a' }} <a href="#"><i class="bi bi-arrow-repeat"></i></a></td>
               </tr>
         }
     </tbody>

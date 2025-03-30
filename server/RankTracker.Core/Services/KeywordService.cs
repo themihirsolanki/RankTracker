@@ -6,15 +6,29 @@ namespace RankTracker.Core.Services;
 public class KeywordService : IKeywordService
 {
     private readonly IKeywordRepository keywordRepository;
+    private readonly IWebsiteRepository websiteRepository;
 
-    public KeywordService(IKeywordRepository keywordRepository)
+    public KeywordService(IKeywordRepository keywordRepository, IWebsiteRepository websiteRepository)
     {
         this.keywordRepository = keywordRepository;
+        this.websiteRepository = websiteRepository;
     }
 
     public async Task AddKeywordAsync(string keyword)
     {
-        await keywordRepository.AddAsync(new Keyword { Text = keyword });
+        var websites = await websiteRepository.GetAllAsync();
 
+        // Currently we assume we will have only one website so we have hard coded logic to get first website
+        // else we would be passing via the client
+
+        var website = websites.First();
+        var newWebsite = new Keyword { 
+                                Text = keyword, 
+                                DateCreated = DateTime.Now, 
+                                DateModified = DateTime.Now, 
+                                WebsiteId = website.Id 
+                        };
+
+        await keywordRepository.AddAsync(newWebsite);
     }
 }

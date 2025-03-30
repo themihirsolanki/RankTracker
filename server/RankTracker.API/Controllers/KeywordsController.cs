@@ -26,7 +26,8 @@ namespace RankTracker.API.Controllers
             {
                 Id = k.Id,
                 Keyword = k.Text,
-                Rank = 5
+                Rank = 5,
+                DateUpdated = k.DateModified
             });
 
             return Ok(models);
