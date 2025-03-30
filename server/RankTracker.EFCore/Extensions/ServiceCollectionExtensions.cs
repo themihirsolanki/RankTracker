@@ -7,7 +7,7 @@ using RankTracker.EFCore.Repositories;
 
 namespace RankTracker.EFCore;
 
-public static class ServiceRegistration
+public static class ServiceCollectionExtensions
 {
     public static void AddEFCoreServices(this IServiceCollection services, IConfiguration configuration)
     {
@@ -15,5 +15,8 @@ public static class ServiceRegistration
                 options.UseInMemoryDatabase("RankTracker"));
 
         services.AddScoped<IWebsiteRepository, WebsiteRepository>();
+        services.AddScoped<IKeywordRepository, KeywordRepository>();
+        services.AddScoped<IKeywordRankRepository, KeywordRankRepository>();
+        services.AddScoped<ISearchEngineRepository, SearchEngineRepository>();
     }
 }

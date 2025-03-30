@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Website } from '../models/website.model';
+import { Keyword } from '../models/keyword.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,11 @@ export class ApiService {
   }
 
   addKeyword(keyword: string) {
-    return this.http.post('keywords', { keyword});
+    return this.http.post('keywords', { keyword });
   }
+
+  getKeywords() {
+    return this.http.get<Keyword[]>('keywords');
+  }
+
 }

@@ -1,11 +1,12 @@
 using Microsoft.EntityFrameworkCore;
+using RankTracker.Core;
 using RankTracker.EFCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
 builder.Services.AddEFCoreServices(builder.Configuration);
-
+builder.Services.AddCoreServices(builder.Configuration);
 
 builder.Services.AddCors(options =>
 {

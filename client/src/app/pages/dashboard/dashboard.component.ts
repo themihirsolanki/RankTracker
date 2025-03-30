@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { KeywordRank } from '../../models/keyword-rank.model';
+import { Keyword } from '../../models/keyword.model';
 import { CommonModule } from '@angular/common';
 import { AddKeywordComponent } from "../../components/add-keyword/add-keyword.component";
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,15 +15,21 @@ import { AddKeywordComponent } from "../../components/add-keyword/add-keyword.co
 })
 export class DashboardComponent implements OnInit {
   
-  keywordRanks: KeywordRank[] = [
-    { keyword: 'land registry searches', position: 4, dateUpdated: new Date() },
-    { keyword: 'land registry searches by address', position: 7, dateUpdated: new Date() },
-    { keyword: 'land registry title deeds', position: 3, dateUpdated: new Date() },
+  keywords: Keyword[] = [
+    { keyword: 'land registry searches', rank: 4, dateUpdated: new Date() },
+    { keyword: 'land registry searches by address', rank: 7, dateUpdated: new Date() },
+    { keyword: 'land registry title deeds', rank: 3, dateUpdated: new Date() },
   ]
 
-  constructor() { }
+  constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
-    console.log("DashboardComponent initialized");    
-  }
+    this.apiService.getKeywords().subscribe(
+      (keywords: Keyword[]) => {  
+        this.keywords = keywords.map(keyword => ({
+          ...keyword,
+          dateUpdated: new Date(keyword.dateUpdated) // Ensure dateUpdated is a Date object
+        }));
+      })
+  };
 }

@@ -1,5 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using RankTracker.API.Models;
+using RankTracker.API.Models.Keywords;
+using RankTracker.Core.Repositories;
+using RankTracker.Core.Services;
 
 namespace RankTracker.API.Controllers
 {
@@ -8,21 +11,32 @@ namespace RankTracker.API.Controllers
     public class KeywordsController : ControllerBase
     {
         private ILogger<KeywordsController> _logger;
-
+        
         public KeywordsController(ILogger<KeywordsController> logger)
         {
             _logger = logger;
         }
 
         [HttpGet()]
-        public IActionResult Get()
+        public async Task<ActionResult<IEnumerable<KeywordModel>>> GetAll([FromServices] IKeywordRepository keywordRepository)
         {
-            return Ok("API is running");
+            var keywords = await keywordRepository.GetAllAsync();
+
+            var models = keywords.Select(k => new KeywordModel
+            {
+                Id = k.Id,
+                Keyword = k.Text,
+                Rank = 5
+            });
+
+            return Ok(models);
         }
 
         [HttpPost()]
-        public IActionResult Post([FromBody] AddKeywordModel model)
+        public async Task<IActionResult> Post([FromBody] AddKeywordModel model,[FromServices] IKeywordService keywordService)
         {
+            await keywordService.AddKeywordAsync(model.Keyword);
+            
             return Ok();
         }
     }

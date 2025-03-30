@@ -4,17 +4,17 @@
     <thead>
       <tr>
         <th scope="col">Keyword</th>
-        <th class="position" scope="col">Position</th>
+        <th class="position" scope="col">Rank</th>
         <th class="link"></th>
         <th class="link"></th>
         <th class="updated" scope="col">Updated</th>
       </tr>
     </thead>
     <tbody>
-        @for (keywordRank of keywordRanks; track $index) {
+        @for (keywordRank of keywords; track $index) {
             <tr>
                 <td>{{ keywordRank.keyword }}</td>
-                <td class="position">{{ keywordRank.position }}</td>
+                <td class="position">{{ keywordRank.rank }}</td>
                 <td class="link"><a href="#"><i class="bi bi-link-45deg"></i></a></td>
                 <td class="link"><a href="#"><i class="bi bi-graph-up"></i></a></td>
                 <td class="updated">{{ keywordRank.dateUpdated | date:'mediumDate' }} <a href="#"><i class="bi bi-arrow-repeat"></i></a></td>
