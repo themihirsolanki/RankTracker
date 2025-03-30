@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Configuration } from '../models/configuration.model';
+import { Website } from '../models/website.model';
 
 @Injectable({
   providedIn: 'root'
@@ -9,12 +9,12 @@ export class ApiService {
   
   constructor(private http: HttpClient) {}
 
-  fetchConfiguration() {
-    return this.http.get<Configuration>('configuration');
+  getWebsite() {
+    return this.http.get<Website>('websites');
   }
 
-  updateConfiguration(domain: string) {
-    return this.http.post('configuration', { domain });
+  updateWebsite(domain: string) {
+    return this.http.post('websites', { domain });
   }
 
   addKeyword(keyword: string) {

@@ -26,7 +26,7 @@ export class SetupComponent {
       alert('Domain cannot be empty.');
       return;
     }
-    this.apiService.updateConfiguration(this.domain).subscribe(
+    this.apiService.updateWebsite(this.domain).subscribe(
       (response) => {
         this.router.navigate(['/']);
       })
