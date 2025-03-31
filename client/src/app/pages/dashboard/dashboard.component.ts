@@ -64,4 +64,37 @@ export class DashboardComponent implements OnInit {
       }
     );
   }
+
+  deleteKeyword(id: number) {
+    const confirmed = window.confirm('Are you sure you want to delete this keyword?');
+    if (confirmed) {
+      this.apiService.deleteKeyword(id).subscribe(
+        response => {
+          this.loadKeywords(); 
+        });
+    }
+  }
+
+  refreshKeyword(id: number, element: HTMLElement) {
+    
+    // animation to refresh current row
+    // just a visual indication that the refresh is in progress
+    var parent = element.parentElement;
+    var grandparent = parent?.parentElement;
+    
+    if (grandparent) {
+      grandparent.className = 'blink';
+    }
+
+    this.apiService.refreshKeyword(id).subscribe(
+      response => {
+        this.loadKeywords();
+        
+        setTimeout(() => {
+          if (grandparent) {
+            grandparent.className = '';
+          }
+        }, 2000); 
+      });
+  }
 }

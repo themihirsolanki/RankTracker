@@ -21,3 +21,18 @@
     color:red;
     font-weight: bold;
 }
+
+.delete {
+    width: 50px;
+    text-align: center;
+}
+
+.blink {
+    animation: blinker 1s linear infinite;
+  }
+  
+  @keyframes blinker {
+    50% {
+      opacity: 0;
+    }
+  }

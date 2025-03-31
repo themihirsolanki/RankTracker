@@ -73,5 +73,37 @@ namespace RankTracker.API.Controllers
                 return StatusCode(500);
             }
         }
+
+        [HttpGet("refresh/{id}")]
+        public async Task<IActionResult> Refresh(int id, [FromServices] IKeywordService keywordService)
+        {
+            try
+            {
+                await keywordService.RefreshRanking(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "An error occurred while refreshing keyword rankings.");
+                return StatusCode(500);
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id, [FromServices] IKeywordService keywordService)
+        {
+            try
+            {
+                await keywordService.DeleteKeywordAsync(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "An error occurred while adding the keyword.");
+                return StatusCode(500);
+            }
+
+        }
+
     }
 }

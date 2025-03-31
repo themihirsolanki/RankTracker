@@ -18,12 +18,8 @@ public class KeywordService : IKeywordService
 
     public async Task AddKeywordAsync(string keyword)
     {
-        var websites = await websiteRepository.GetAllAsync();
+        var website = await GetWebsite();
 
-        // Currently we assume we will have only one website so we have hard coded logic to get first website
-        // else we would be passing via the client
-
-        var website = websites.First();
         var newKeyword = new Keyword { 
                                 Text = keyword, 
                                 DateCreated = DateTime.Now, 
@@ -39,14 +35,28 @@ public class KeywordService : IKeywordService
         }
     }
 
+    public async Task DeleteKeywordAsync(int id)
+    {
+        var keyword = await keywordRepository.GetAsync(id);
+        await keywordRepository.RemoveAsync(keyword);
+    }
+
+    public async Task RefreshRanking(int id)
+    {
+        var website = await GetWebsite();
+
+        var keyword = await keywordRepository.GetAsync(id);
+
+        foreach (var keywordRankService in keywordRankServices)
+        {
+            await keywordRankService.CheckKeywordRank(website.Domain, keyword.Id);
+        }
+    }
+
     public async Task RefreshRankings()
     {
-        var websites = await websiteRepository.GetAllAsync();
+        var website = await GetWebsite();
 
-        // Currently we assume we will have only one website so we have hard coded logic to get first website
-        // else we would be passing via the client
-
-        var website = websites.First();
         var keywords = await keywordRepository.GetAllAsync(website.Id);
 
         foreach (var keywordRankService in keywordRankServices)
@@ -57,5 +67,15 @@ public class KeywordService : IKeywordService
             }
             
         }
+    }
+
+    private async Task<Website> GetWebsite() 
+    {
+        var websites = await websiteRepository.GetAllAsync();
+
+        // Currently we assume we will have only one website so we have hard coded logic to get first website
+        // else we would be passing via the client
+
+        return websites.First();
     }
 }

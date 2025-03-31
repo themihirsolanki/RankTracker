@@ -29,4 +29,12 @@ export class ApiService {
   refreshAllKeywordRankings() {
     return this.http.get('keywords/refresh-all');
   }
+
+  deleteKeyword(id: number) {
+    return this.http.delete(`keywords/${id}`);
+  }
+
+  refreshKeyword(id: number) {
+    return this.http.get(`keywords/refresh/${id}`);
+  }
 }
