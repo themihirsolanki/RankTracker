@@ -1,5 +1,14 @@
 <h1>Keyword Ranking</h1>
-<app-add-keyword (keywordAdded)="keywordAdded($event)"></app-add-keyword>
+<div class="row">
+  <div class="col-9">
+    <app-add-keyword (keywordAdded)="keywordAdded($event)"></app-add-keyword>
+  </div>
+  <div class="col-3 text-end">
+    <span *ngIf="showRefreshAllAlert" class="text-success pe-3 pt-3">{{ refreshText }}</span>
+    <input type="button" class="btn btn-primary btn-sm" value="Refresh All" (click)="refreshAll()">
+  </div>
+</div>
+
 <table class="table table-bordered">
     <thead>
       <tr>

@@ -14,7 +14,9 @@ import { ApiService } from '../../services/api.service';
   styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent implements OnInit {
-  
+
+  showRefreshAllAlert: boolean = false;
+  refreshText = "";
   keywords: Keyword[] = [
     // { keyword: 'land registry searches', rank: 4, dateUpdated: new Date() },
     // { keyword: 'land registry searches by address', rank: 7, dateUpdated: new Date() },
@@ -38,12 +40,28 @@ export class DashboardComponent implements OnInit {
   }
 
   keywordAdded(keyword: string) {
-    console.log('Keyword added:', keyword);
     
     this.apiService.addKeyword(keyword).subscribe(
       response => {
-        console.log('Keyword added successfully:', response);
         this.loadKeywords(); 
       });
+  }
+
+  refreshAll() {
+    this.showRefreshAllAlert = true;
+    this.refreshText = "refreshing ...";
+    
+    this.apiService.refreshAllKeywordRankings().subscribe(
+      response => {
+        
+        this.loadKeywords(); 
+        this.refreshText = "refreshed...";
+        
+        setTimeout(() => {
+          this.showRefreshAllAlert = false;
+        }, 1000);
+    
+      }
+    );
   }
 }

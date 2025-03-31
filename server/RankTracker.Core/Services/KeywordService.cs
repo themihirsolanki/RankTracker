@@ -38,4 +38,24 @@ public class KeywordService : IKeywordService
             await keywordRankService.CheckKeywordRank(website.Domain, newKeyword.Id);
         }
     }
+
+    public async Task RefreshRankings()
+    {
+        var websites = await websiteRepository.GetAllAsync();
+
+        // Currently we assume we will have only one website so we have hard coded logic to get first website
+        // else we would be passing via the client
+
+        var website = websites.First();
+        var keywords = await keywordRepository.GetAllAsync(website.Id);
+
+        foreach (var keywordRankService in keywordRankServices)
+        {
+            foreach (var keyword in keywords)
+            {
+                await keywordRankService.CheckKeywordRank(website.Domain, keyword.Id);
+            }
+            
+        }
+    }
 }

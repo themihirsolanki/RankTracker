@@ -26,4 +26,7 @@ export class ApiService {
     return this.http.get<Keyword[]>('keywords');
   }
 
+  refreshAllKeywordRankings() {
+    return this.http.get('keywords/refresh-all');
+  }
 }

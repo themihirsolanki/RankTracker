@@ -58,5 +58,20 @@ namespace RankTracker.API.Controllers
             }
             
         }
+
+        [HttpGet("refresh-all")]
+        public async Task<IActionResult> RefreshAll([FromServices] IKeywordService keywordService)
+        {
+            try
+            {
+                await keywordService.RefreshRankings();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "An error occurred while refreshing keyword rankings.");
+                return StatusCode(500);
+            }
+        }
     }
 }

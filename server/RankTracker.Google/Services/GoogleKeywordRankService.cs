@@ -29,6 +29,7 @@ public class GoogleKeywordRankService : IKeywordRankService
             keyword.Rank = 0; // not found in current result set
         }
 
+        keyword.DateModified = DateTime.UtcNow;
         await keywordRepository.UpdateAsync(keyword);
     }
 
