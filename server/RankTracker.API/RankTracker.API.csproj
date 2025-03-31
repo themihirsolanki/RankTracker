@@ -13,8 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\RankTracker.Bing\RankTracker.Bing.csproj" />
     <ProjectReference Include="..\RankTracker.Core\RankTracker.Core.csproj" />
     <ProjectReference Include="..\RankTracker.EFCore\RankTracker.EFCore.csproj" />
+    <ProjectReference Include="..\RankTracker.Google\RankTracker.Google.csproj" />
   </ItemGroup>
 
 </Project>

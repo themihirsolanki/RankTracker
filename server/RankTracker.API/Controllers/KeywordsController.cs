@@ -10,35 +10,53 @@ namespace RankTracker.API.Controllers
     [Route("[controller]")]
     public class KeywordsController : ControllerBase
     {
-        private ILogger<KeywordsController> _logger;
+        private ILogger<KeywordsController> logger;
         
         public KeywordsController(ILogger<KeywordsController> logger)
         {
-            _logger = logger;
+            this.logger = logger;
         }
 
         [HttpGet()]
         public async Task<ActionResult<IEnumerable<KeywordModel>>> GetAll([FromServices] IKeywordRepository keywordRepository)
         {
-            var keywords = await keywordRepository.GetAllAsync();
-
-            var models = keywords.Select(k => new KeywordModel
+            try
             {
-                Id = k.Id,
-                Keyword = k.Text,
-                Rank = 5,
-                DateUpdated = k.DateModified
-            });
+                var keywords = await keywordRepository.GetAllAsync();
 
-            return Ok(models);
+                // TODO: Replace this with AutoMapper
+                var models = keywords.Select(k => new KeywordModel
+                {
+                    Id = k.Id,
+                    Keyword = k.Text,
+                    Rank = k.Rank,
+                    DateUpdated = k.DateModified
+                });
+
+                return Ok(models);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "An error occurred while getting the keywords.");
+                return StatusCode(500);
+            }
+            
         }
 
         [HttpPost()]
         public async Task<IActionResult> Post([FromBody] AddKeywordModel model,[FromServices] IKeywordService keywordService)
         {
-            await keywordService.AddKeywordAsync(model.Keyword);
+            try
+            {
+                await keywordService.AddKeywordAsync(model.Keyword);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "An error occurred while adding the keyword.");
+                return StatusCode(500);
+            }
             
-            return Ok();
         }
     }
 }

@@ -9,6 +9,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RankTracker.Core", "RankTra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RankTracker.EFCore", "RankTracker.EFCore\RankTracker.EFCore.csproj", "{5638D9BB-C86D-4AA9-8927-E46884EF12F1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RankTracker.Google", "RankTracker.Google\RankTracker.Google.csproj", "{18D6CA83-47B1-4F77-8760-E465838F6DB7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RankTracker.Bing", "RankTracker.Bing\RankTracker.Bing.csproj", "{AD5EEC47-ED28-45CB-8727-62C7BAD18065}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SearchEngines", "SearchEngines", "{40BC1181-66C6-4D62-8A39-684E1B5C39A2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,8 +33,20 @@ Global
 		{5638D9BB-C86D-4AA9-8927-E46884EF12F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5638D9BB-C86D-4AA9-8927-E46884EF12F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5638D9BB-C86D-4AA9-8927-E46884EF12F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18D6CA83-47B1-4F77-8760-E465838F6DB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18D6CA83-47B1-4F77-8760-E465838F6DB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18D6CA83-47B1-4F77-8760-E465838F6DB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18D6CA83-47B1-4F77-8760-E465838F6DB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD5EEC47-ED28-45CB-8727-62C7BAD18065}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD5EEC47-ED28-45CB-8727-62C7BAD18065}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD5EEC47-ED28-45CB-8727-62C7BAD18065}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD5EEC47-ED28-45CB-8727-62C7BAD18065}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{18D6CA83-47B1-4F77-8760-E465838F6DB7} = {40BC1181-66C6-4D62-8A39-684E1B5C39A2}
+		{AD5EEC47-ED28-45CB-8727-62C7BAD18065} = {40BC1181-66C6-4D62-8A39-684E1B5C39A2}
 	EndGlobalSection
 EndGlobal

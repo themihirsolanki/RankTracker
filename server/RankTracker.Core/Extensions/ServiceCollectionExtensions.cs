@@ -9,5 +9,6 @@ public static class ServiceCollectionExtensions
     {
         services.AddScoped<IKeywordService, KeywordService>();
         services.AddScoped<IWebsiteService, WebsiteService>();
+        services.AddScoped<IWebPageDownloader, WebPageDownloader>();
     }
 }

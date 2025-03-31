@@ -1,18 +1,25 @@
-using Microsoft.EntityFrameworkCore;
+using RankTracker.Bing.Extensions;
 using RankTracker.Core;
 using RankTracker.EFCore;
+using RankTracker.Google.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCoreServices(builder.Configuration);
 
 builder.Services.AddEFCoreServices(builder.Configuration);
-builder.Services.AddCoreServices(builder.Configuration);
+
+// Since google is not working, this is commented out
+// builder.Services.AddGoogleServices(builder.Configuration);
+
+builder.Services.AddBingServices(builder.Configuration);
 
 builder.Services.AddCors(options =>
 {
+    // We have allow all ports for now, just incase user is running the client app on different port
     options.AddDefaultPolicy(policy =>
                         {
-                            policy.WithOrigins("http://localhost:4200");
+                            policy.WithOrigins("http://localhost:*", "https://localhost:*");
                         });
 });
 

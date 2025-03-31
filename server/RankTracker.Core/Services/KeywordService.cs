@@ -7,11 +7,13 @@ public class KeywordService : IKeywordService
 {
     private readonly IKeywordRepository keywordRepository;
     private readonly IWebsiteRepository websiteRepository;
+    private readonly IEnumerable<IKeywordRankService> keywordRankServices;
 
-    public KeywordService(IKeywordRepository keywordRepository, IWebsiteRepository websiteRepository)
+    public KeywordService(IKeywordRepository keywordRepository, IWebsiteRepository websiteRepository, IEnumerable<IKeywordRankService> keywordRankServices)
     {
         this.keywordRepository = keywordRepository;
         this.websiteRepository = websiteRepository;
+        this.keywordRankServices = keywordRankServices;
     }
 
     public async Task AddKeywordAsync(string keyword)
@@ -22,13 +24,18 @@ public class KeywordService : IKeywordService
         // else we would be passing via the client
 
         var website = websites.First();
-        var newWebsite = new Keyword { 
+        var newKeyword = new Keyword { 
                                 Text = keyword, 
                                 DateCreated = DateTime.Now, 
                                 DateModified = DateTime.Now, 
                                 WebsiteId = website.Id 
                         };
 
-        await keywordRepository.AddAsync(newWebsite);
+        await keywordRepository.AddAsync(newKeyword);
+
+        foreach (var keywordRankService in keywordRankServices)
+        {
+            await keywordRankService.CheckKeywordRank(website.Domain, newKeyword.Id);
+        }
     }
 }

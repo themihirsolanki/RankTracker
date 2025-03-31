@@ -9,29 +9,41 @@ namespace RankTracker.API.Controllers;
 [Route("[controller]")]
 public class WebsitesController : ControllerBase
 {
-    private ILogger<WebsitesController> _logger;
+    private ILogger<WebsitesController> logger;
     
     public WebsitesController(ILogger<WebsitesController> logger)
     {
-        _logger = logger;
+        this.logger = logger;
     }
 
     [HttpGet()]
     public async Task<ActionResult<WebsiteModel>> Get([FromServices] IWebsiteRepository websiteRepository)
     {
-        var model = new WebsiteModel();
+        try
+        {
+            var model = new WebsiteModel();
 
-        var websites = await websiteRepository.GetAllAsync();
+            var websites = await websiteRepository.GetAllAsync();
 
-        if (websites.Any())
-        { 
-            var website = websites.First();
-            model.Domain = website.Domain;
+            // Currently only one website is supported
+            // but our system is designed to support multiple websites in future
+            // so we have this logic in place to get the first website
+            if (websites.Any())
+            {
+                var website = websites.First();
+                model.Domain = website.Domain;
 
-            return Ok(model);
+                return Ok(model);
+            }
+            else
+            {
+                return NotFound();
+            }
         }
-        else {
-            return NotFound();
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "An error occurred while getting the website.");
+            return StatusCode(500);
         }
     }
 
@@ -41,13 +53,21 @@ public class WebsitesController : ControllerBase
         try
         {
             await websiteService.Add(model.Domain);
+
+            // can return 201 with created with the new website and its URL
+            return Ok(new { message = "Website added successfully." });
         }
         catch (InvalidOperationException ex)
         {
+            // this should ideally not happen but currently we have not restricted the setup page
+            // so user may directly go to the page and try to add the same website again
+            logger.LogError(ex, "An error occurred while adding the website. Duplicate Website");
             return BadRequest($"Website already exists. {ex.Message}");
         }
-
-        // can return 201 with created with the new website and its URL
-        return Ok(new { message = "Website added successfully." }); ;
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "An error occurred while adding the website.");
+            return StatusCode(500);
+        }
     }
 }
