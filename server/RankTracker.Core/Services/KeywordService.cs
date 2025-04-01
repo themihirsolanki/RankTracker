@@ -24,34 +24,44 @@ public class KeywordService : IKeywordService
     public async Task AddKeywordAsync(string keyword)
     {
         var website = await GetWebsite();
-
-        var newKeyword = new Keyword { 
-                                Text = keyword, 
-                                DateCreated = DateTime.Now, 
-                                DateModified = DateTime.Now, 
-                                WebsiteId = website.Id 
-                        };
-
-        await keywordRepository.AddAsync(newKeyword);
-
-        foreach (var keywordRankService in keywordRankServices)
+        if (website != null)
         {
-            await keywordRankService.CheckKeywordRank(website.Domain, newKeyword.Id);
+            var newKeyword = new Keyword
+            {
+                Text = keyword,
+                DateCreated = DateTime.Now,
+                DateModified = DateTime.Now,
+                WebsiteId = website.Id
+            };
+
+            await keywordRepository.AddAsync(newKeyword);
+
+            foreach (var keywordRankService in keywordRankServices)
+            {
+                await keywordRankService.CheckKeywordRank(website.Domain, newKeyword.Id);
+            }
         }
     }
 
     public async Task DeleteKeywordAsync(int id)
     {
         var keyword = await keywordRepository.GetAsync(id);
-        await keywordRankRepository.RemoveAllByKeywordId(keyword.Id);
-        await keywordRepository.RemoveAsync(keyword);
+        if (keyword != null)
+        {
+            await keywordRankRepository.RemoveAllByKeywordId(keyword.Id);
+            await keywordRepository.RemoveAsync(keyword);
+        }
     }
 
     public async Task RefreshRanking(int id)
     {
         var website = await GetWebsite();
-
         var keyword = await keywordRepository.GetAsync(id);
+
+        if (keyword == null || website == null)
+        {
+            return;
+        }
 
         foreach (var keywordRankService in keywordRankServices)
         {
@@ -62,6 +72,10 @@ public class KeywordService : IKeywordService
     public async Task RefreshRankings()
     {
         var website = await GetWebsite();
+        if (website == null)
+        {
+            return;
+        }
 
         var keywords = await keywordRepository.GetAllAsync(website.Id);
 
@@ -75,7 +89,7 @@ public class KeywordService : IKeywordService
         }
     }
 
-    private async Task<Website> GetWebsite() 
+    private async Task<Website?> GetWebsite() 
     {
         var websites = await websiteRepository.GetAllAsync();
 

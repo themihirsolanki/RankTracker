@@ -52,7 +52,14 @@ public class WebsitesController : ControllerBase
     {
         try
         {
-            await websiteService.Add(model.Domain);
+            if (string.IsNullOrEmpty(model.Domain))
+            {
+                throw new InvalidOperationException("Domain cannot be empty.");
+            }
+            else
+            {
+                await websiteService.Add(model.Domain);
+            }
 
             // can return 201 with created with the new website and its URL
             return Ok(new { message = "Website added successfully." });

@@ -12,7 +12,7 @@ public class SearchEngineRepository : RepositoryBase<SearchEngine>, ISearchEngin
 
     }
 
-    public async Task<SearchEngine> GetSearchEngineByName(string name)
+    public async Task<SearchEngine?> GetSearchEngineByName(string name)
     {
         return await dbSet.SingleOrDefaultAsync(x => x.Name.ToLower() == name);
     }

@@ -38,7 +38,7 @@ public class RepositoryBase<TEntity> : IRepository<TEntity> where TEntity : clas
         return await dbSet.ToListAsync();
     }
 
-    public async Task<TEntity> GetAsync(int id)
+    public async Task<TEntity?> GetAsync(int id)
     {
         return await dbSet.FindAsync(id);
     }
