@@ -23,7 +23,7 @@ public class WebsiteService : IWebsiteService
             throw new InvalidOperationException("Website already exists");
         }
 
-        var website = new Website { Domain = domain };
+        var website = new Website { Domain = domain, DateCreated = DateTime.Now, DateModified = DateTime.Now };
         await websiteRepository.AddAsync(website);
     }
 }

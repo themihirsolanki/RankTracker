@@ -48,7 +48,7 @@ public class GoogleKeywordRankService : IKeywordRankService
             KeywordId = keyword.Id,
             Rank = rank,
             SearchEngineId = searchEngine.Id,
-            DateCreated = DateTime.UtcNow
+            DateCreated = DateTime.Now
         };
 
         await keywordRankRepository.AddAsync(keywordRankHistory);

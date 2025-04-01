@@ -11,8 +11,18 @@ public static class ServiceCollectionExtensions
 {
     public static void AddEFCoreServices(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDbContext<DataContext>(options =>
-                options.UseInMemoryDatabase("RankTracker"));
+        var connectionString = configuration.GetConnectionString("DefaultConnection");
+
+        if (connectionString == null)
+        {
+            services.AddDbContext<DataContext>(options =>
+                    options.UseInMemoryDatabase("RankTracker"));
+        }
+        else
+        {
+            services.AddDbContext<DataContext>(options =>
+                options.UseSqlServer(connectionString));
+        }
 
         services.AddScoped<IWebsiteRepository, WebsiteRepository>();
         services.AddScoped<IKeywordRepository, KeywordRepository>();

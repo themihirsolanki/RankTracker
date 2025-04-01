@@ -6,7 +6,7 @@ namespace RankTracker.EFCore.Repositories;
 
 public class RepositoryBase<TEntity> : IRepository<TEntity> where TEntity : class
 {
-    private readonly DataContext dataContext;
+    protected readonly DataContext dataContext;
     protected readonly DbSet<TEntity> dbSet;
 
     public RepositoryBase(DataContext dbContext)

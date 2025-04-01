@@ -10,9 +10,15 @@ public class DataContext : DbContext
 
     }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        optionsBuilder.UseInMemoryDatabase("RankTracker");
+        // Configure singular table names
+        foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+        {
+            modelBuilder.Entity(entityType.Name).ToTable(entityType.ClrType.Name);
+        }
+
+        base.OnModelCreating(modelBuilder);
     }
 
     public DbSet<Keyword> Keywords { get; set; }

@@ -7,12 +7,17 @@ public class KeywordService : IKeywordService
 {
     private readonly IKeywordRepository keywordRepository;
     private readonly IWebsiteRepository websiteRepository;
+    private readonly IKeywordRankRepository keywordRankRepository;
     private readonly IEnumerable<IKeywordRankService> keywordRankServices;
 
-    public KeywordService(IKeywordRepository keywordRepository, IWebsiteRepository websiteRepository, IEnumerable<IKeywordRankService> keywordRankServices)
+    public KeywordService(IKeywordRepository keywordRepository, 
+            IWebsiteRepository websiteRepository,
+            IKeywordRankRepository keywordRankRepository,
+            IEnumerable<IKeywordRankService> keywordRankServices)
     {
         this.keywordRepository = keywordRepository;
         this.websiteRepository = websiteRepository;
+        this.keywordRankRepository = keywordRankRepository;
         this.keywordRankServices = keywordRankServices;
     }
 
@@ -38,6 +43,7 @@ public class KeywordService : IKeywordService
     public async Task DeleteKeywordAsync(int id)
     {
         var keyword = await keywordRepository.GetAsync(id);
+        await keywordRankRepository.RemoveAllByKeywordId(keyword.Id);
         await keywordRepository.RemoveAsync(keyword);
     }
 

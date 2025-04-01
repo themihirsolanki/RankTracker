@@ -1,0 +1,91 @@
+IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = 'RankTracker')
+BEGIN
+    CREATE DATABASE RankTracker;
+END;
+GO
+
+USE [RankTracker];
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Keyword](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[WebsiteId] [int] NOT NULL,
+	[Text] [varchar](250) NOT NULL,
+	[GoogleRank] [int] NULL,
+	[BingRank] [int] NULL,
+	[DateCreated] [datetime] NOT NULL,
+	[DateModified] [datetime] NOT NULL,
+ CONSTRAINT [PK_Keyword] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[KeywordRank](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[KeywordId] [int] NOT NULL,
+	[SearchEngineId] [int] NOT NULL,
+	[Rank] [int] NOT NULL,
+	[DateCreated] [datetime] NOT NULL,
+ CONSTRAINT [PK_KeywordRank] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[SearchEngine](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [varchar](50) NOT NULL,
+	[DateCreated] [datetime] NOT NULL,
+	[DateModified] [datetime] NOT NULL,
+ CONSTRAINT [PK_SearchEngine] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Website](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Domain] [nvarchar](250) NOT NULL,
+	[DateCreated] [datetime] NOT NULL,
+	[DateModified] [datetime] NOT NULL,
+ CONSTRAINT [PK_Website] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[Keyword]  WITH CHECK ADD  CONSTRAINT [FK_Keyword_Website] FOREIGN KEY([WebsiteId])
+REFERENCES [dbo].[Website] ([Id])
+GO
+ALTER TABLE [dbo].[Keyword] CHECK CONSTRAINT [FK_Keyword_Website]
+GO
+ALTER TABLE [dbo].[KeywordRank]  WITH CHECK ADD  CONSTRAINT [FK_KeywordRank_Keyword] FOREIGN KEY([KeywordId])
+REFERENCES [dbo].[Keyword] ([Id])
+GO
+ALTER TABLE [dbo].[KeywordRank] CHECK CONSTRAINT [FK_KeywordRank_Keyword]
+GO
+ALTER TABLE [dbo].[KeywordRank]  WITH CHECK ADD  CONSTRAINT [FK_KeywordRank_SearchEngine] FOREIGN KEY([SearchEngineId])
+REFERENCES [dbo].[SearchEngine] ([Id])
+GO
+ALTER TABLE [dbo].[KeywordRank] CHECK CONSTRAINT [FK_KeywordRank_SearchEngine]
+GO
