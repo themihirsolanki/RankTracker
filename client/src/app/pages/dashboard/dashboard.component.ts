@@ -41,7 +41,9 @@ export class DashboardComponent implements OnInit {
 
   keywordAdded(keyword: string) {
     
-    this.apiService.addKeyword(keyword).subscribe(
+    let keywords: string[] = keyword.split('\n').map(k => k.trim()).filter(k => k !== '');
+
+    this.apiService.addKeywords(keywords).subscribe(
       response => {
         this.loadKeywords(); 
       });

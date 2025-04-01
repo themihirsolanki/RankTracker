@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using RankTracker.API.Models;
 using RankTracker.API.Models.Keywords;
 using RankTracker.Core.Repositories;
 using RankTracker.Core.Services;
@@ -44,11 +43,15 @@ namespace RankTracker.API.Controllers
         }
 
         [HttpPost()]
-        public async Task<IActionResult> Post([FromBody] AddKeywordModel model,[FromServices] IKeywordService keywordService)
+        public async Task<IActionResult> Post([FromBody] string[] keywords, [FromServices] IKeywordService keywordService)
         {
             try
             {
-                await keywordService.AddKeywordAsync(model.Keyword);
+                foreach (var keyword in keywords)
+                {
+                    await keywordService.AddKeywordAsync(keyword);
+                }
+                
                 return Ok();
             }
             catch (Exception ex)
@@ -56,7 +59,6 @@ namespace RankTracker.API.Controllers
                 logger.LogError(ex, "An error occurred while adding the keyword.");
                 return StatusCode(500);
             }
-            
         }
 
         [HttpGet("refresh-all")]

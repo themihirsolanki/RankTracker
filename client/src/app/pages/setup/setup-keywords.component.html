@@ -1,0 +1,20 @@
+<div class="container-fluid">
+    <div>
+        <h1 class="text-center">Setup Keywords</h1>
+        <div class="row">
+            <div class="col-md-12">
+                <p>To get started, add your search keywords. Each keyword should be placed on a separate line.</p>
+                <form (ngSubmit)="onSubmit()" #keywordsForm="ngForm">
+                    <div class="mb-3">
+                        <label for="keyword" class="form-label fw-bold">Keywords</label>
+                        <textarea class="form-control" id="keywords" rows="3" 
+                                required name="keywords"
+                                [(ngModel)]="keywords" #keywordsInput="ngModel"
+                                (input)="keywords = keywords.toLowerCase()"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary float-end">Continue</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

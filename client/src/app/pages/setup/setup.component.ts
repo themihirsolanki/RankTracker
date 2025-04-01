@@ -12,7 +12,8 @@ import { ApiService } from '../../services/api.service';
     RouterModule
   ],
   templateUrl: './setup.component.html',
-  styleUrl: './setup.component.css'
+  styleUrl: './setup.component.css',
+  standalone: true
 })
 export class SetupComponent {
   domain: string = '';
@@ -28,7 +29,7 @@ export class SetupComponent {
     }
     this.apiService.updateWebsite(this.domain).subscribe(
       (response) => {
-        this.router.navigate(['/']);
+        this.router.navigate(['/setup-keywords']);
       })
   }
 }

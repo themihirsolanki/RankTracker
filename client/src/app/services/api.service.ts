@@ -18,10 +18,6 @@ export class ApiService {
     return this.http.post('websites', { domain });
   }
 
-  addKeyword(keyword: string) {
-    return this.http.post('keywords', { keyword });
-  }
-
   getKeywords() {
     return this.http.get<Keyword[]>('keywords');
   }
@@ -36,5 +32,9 @@ export class ApiService {
 
   refreshKeyword(id: number) {
     return this.http.get(`keywords/refresh/${id}`);
+  }
+
+  addKeywords(keywords: string[]) {
+    return this.http.post('keywords', keywords );
   }
 }
