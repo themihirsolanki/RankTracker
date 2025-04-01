@@ -26,6 +26,11 @@ public class BingKeywordRankService : IKeywordRankService
     public async Task CheckKeywordRank(string domain, int keywordId)
     {
         var keyword = await keywordRepository.GetAsync(keywordId);
+        if (keyword == null)
+        {
+            return;
+        }
+
         var links = await bingSerpScrapingService.ExtractLinks(keyword.Text);
         var index = FindFirstPartialMatch(links.ToArray(), domain);
 
@@ -54,7 +59,7 @@ public class BingKeywordRankService : IKeywordRankService
         await keywordRankRepository.AddAsync(keywordRankHistory);
     }
 
-    private async Task<SearchEngine> EnsureSearchEngine(SearchEngine searchEngine)
+    private async Task<SearchEngine> EnsureSearchEngine(SearchEngine? searchEngine)
     {
         if (searchEngine == null)
         {

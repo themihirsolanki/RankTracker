@@ -4,5 +4,5 @@ namespace RankTracker.Core.Repositories;
 
 public interface IWebsiteRepository : IRepository<Website>
 {
-    Task<Website> GetWebsiteByDomainAsync(string domain);
+    Task<Website?> GetWebsiteByDomainAsync(string domain);
 }
