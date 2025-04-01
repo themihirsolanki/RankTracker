@@ -1,4 +1,5 @@
-﻿using RankTracker.Core.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using RankTracker.Core.Entities;
 using RankTracker.Core.Repositories;
 using RankTracker.EFCore.Context;
 
@@ -8,5 +9,11 @@ public class SearchEngineRepository : RepositoryBase<SearchEngine>, ISearchEngin
 {
     public SearchEngineRepository(DataContext dbContext) : base(dbContext)
     {
+
+    }
+
+    public async Task<SearchEngine> GetSearchEngineByName(string name)
+    {
+        return await dbSet.SingleOrDefaultAsync(x => x.Name.ToLowerInvariant() == name);
     }
 }

@@ -1,6 +1,7 @@
 export interface Keyword {
     id: number;
     keyword: string;
-    rank: number;
+    bingRank: number;
+    googleRank: number;
     dateUpdated: Date;
 }

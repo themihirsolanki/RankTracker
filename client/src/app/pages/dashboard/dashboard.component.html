@@ -13,7 +13,8 @@
     <thead>
       <tr>
         <th scope="col">Keyword</th>
-        <th class="position" scope="col">Rank</th>
+        <th class="position" scope="col">Google</th>
+        <th class="position" scope="col">Bing</th>
         <th class="link"></th>
         <th class="updated" scope="col">Updated</th>
         <th class="delete">Delete</th>
@@ -23,7 +24,8 @@
         @for (keywordRank of keywords; track $index) {
             <tr>
                 <td>{{ keywordRank.keyword }}</td>
-                <td class="position">{{ keywordRank.rank }}</td>
+                <td class="position">{{ keywordRank.googleRank }}</td>
+                <td class="position">{{ keywordRank.bingRank }}</td>
                 <td class="link"><a href="javascript:{}"><i class="fa-solid fa-chart-simple" title="History"></i></a></td>
                 <td class="updated">{{ keywordRank.dateUpdated | date:'d MMM, h:mm a' }} <a href="javascript:{}" class="ps-1" (click)="refreshKeyword(keywordRank.id, link)" #link><i class="fa-solid fa-arrows-rotate" title="Refresh"></i></a></td>
                 <td class="delete"><a href="javascript:{}" (click)="deleteKeyword(keywordRank.id)"><i class="fa-solid fa-trash" title="Delete"></i></a></td>

@@ -6,6 +6,5 @@ public class KeywordRank
     public int SearchEngineId { get; set; }
     public int Rank { get; set; }
     public DateTime DateCreated { get; set; }
-    public DateTime DateModified { get; set; }
 
 }

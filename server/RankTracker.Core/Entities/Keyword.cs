@@ -7,7 +7,8 @@ public class Keyword
 
     public required string Text { get; set; }
     
-    public int? Rank { get; set; }
+    public int? GoogleRank { get; set; }
+    public int? BingRank { get; set; }
     public DateTime DateCreated { get; set; }
     public DateTime DateModified { get; set; }
 }

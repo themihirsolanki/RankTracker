@@ -9,8 +9,7 @@ builder.Services.AddCoreServices(builder.Configuration);
 
 builder.Services.AddEFCoreServices(builder.Configuration);
 
-// Since google is not working, this is commented out
-// builder.Services.AddGoogleServices(builder.Configuration);
+builder.Services.AddGoogleServices(builder.Configuration);
 
 builder.Services.AddBingServices(builder.Configuration);
 

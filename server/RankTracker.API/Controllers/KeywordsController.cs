@@ -28,7 +28,8 @@ namespace RankTracker.API.Controllers
                 {
                     Id = k.Id,
                     Keyword = k.Text,
-                    Rank = k.Rank,
+                    GoogleRank = k.GoogleRank,
+                    BingRank = k.BingRank,
                     DateUpdated = k.DateModified
                 });
 
